@@ -2,6 +2,7 @@
 
 import React, { useReducer, useEffect } from "react";
 import "../styles/Calculator.css";
+// תיקון נתיבי הייבוא - עכשיו הם בתיקייה מקוננת
 import CalculatorWrapper from "./calculator_components/CalculatorWrapper";
 import Screen from "./calculator_components/Screen";
 import ButtonsContainer from "./calculator_components/ButtonsContainer";
