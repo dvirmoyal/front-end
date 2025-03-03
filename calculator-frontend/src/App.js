@@ -1,23 +1,24 @@
-import logo from './logo.svg';
+// calculator-frontend/src/App.js
+
+import React from 'react';
 import './App.css';
+import Calculator from './components/Calculator';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>מחשבון מיקרוסרויסים</h1>
+        <p>חזית React עם מיקרוסרויסים Python ו-Java</p>
       </header>
+      <main>
+        <Calculator />
+      </main>
+      <footer>
+        <p>
+          פרויקט מיקרוסרויסים לדוגמה - חיבור/חיסור ב-Python, כפל/חילוק ב-Java
+        </p>
+      </footer>
     </div>
   );
 }
