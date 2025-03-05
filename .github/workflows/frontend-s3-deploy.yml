@@ -36,6 +36,7 @@ jobs:
         run: npm run build
         env:
           # הגדרת משתני סביבה לכתובות השירותים
+          CI: false
           REACT_APP_ADDITION_SERVICE_URL: ${{ secrets.ADDITION_SERVICE_URL }}
           REACT_APP_MULTIPLICATION_SERVICE_URL: ${{ secrets.MULTIPLICATION_SERVICE_URL }}
 
