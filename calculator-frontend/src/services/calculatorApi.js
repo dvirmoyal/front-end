@@ -123,7 +123,7 @@ export const checkServicesHealth = async () => {
 
   try {
     const multiplicationHealth = await multiplicationServiceClient.get('/api/health');
-    status.multiplication = multiplicationHealth.data.status === 'up';
+    status.multiplication = multiplicationHealth.data.status === 'UP';
   } catch (error) {
     console.error('Multiplication service health check failed:', error);
   }
