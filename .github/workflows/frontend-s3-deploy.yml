@@ -28,7 +28,8 @@ jobs:
 
       - name: Install Dependencies
         working-directory: ./calculator-frontend
-        run: npm ci
+        run: npm install
+
 
       - name: Build React Application
         working-directory: ./calculator-frontend
