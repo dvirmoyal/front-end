@@ -21,7 +21,7 @@ export const calculatorTypes = {
 // קבועים לתקשורת עם המיקרוסרויסים
 export const API_CONSTANTS = {
   // כתובות השירותים (יש להחליף בהתאם לסביבת העבודה)
-  ADDITION_SERVICE_URL: process.env.REACT_APP_ADDITION_SERVICE_URL
+  ADDITION_SERVICE_URL: process.env.REACT_APP_ADDITION_SERVICE_URL,
   MULTIPLICATION_SERVICE_URL: process.env.REACT_APP_MULTIPLICATION_SERVICE_URL || 'http://localhost:8090',
 
   // זמני Timeout לבקשות
