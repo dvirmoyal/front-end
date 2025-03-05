@@ -62,7 +62,7 @@ export const subtractionService = async (a, b) => {
  */
 export const multiplicationService = async (a, b) => {
   try {
-    const response = await multiplicationServiceClient.post('/multiply', { a, b });
+    const response = await multiplicationServiceClient.post('/api/multiply', { a, b });
     console.log(`Multiplication service: ${a} × ${b} = ${response.data.result}`);
     return response.data.result;
   } catch (error) {
@@ -79,7 +79,7 @@ export const multiplicationService = async (a, b) => {
  */
 export const divisionService = async (a, b) => {
   try {
-    const response = await multiplicationServiceClient.post('/divide', { a, b });
+    const response = await multiplicationServiceClient.post('/api/divide', { a, b });
     console.log(`Division service: ${a} ÷ ${b} = ${response.data.result}`);
     return response.data.result;
   } catch (error) {
@@ -122,8 +122,8 @@ export const checkServicesHealth = async () => {
   }
 
   try {
-    const multiplicationHealth = await multiplicationServiceClient.get('/health');
-    status.multiplication = multiplicationHealth.data.status === 'healthy';
+    const multiplicationHealth = await multiplicationServiceClient.get('/api/health');
+    status.multiplication = multiplicationHealth.data.status === 'up';
   } catch (error) {
     console.error('Multiplication service health check failed:', error);
   }

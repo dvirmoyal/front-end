@@ -1,0 +1,62 @@
+name: Frontend S3 Deployment
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - 'calculator-frontend/**'  # הפעל רק כאשר יש שינויים בתיקיית Frontend
+  workflow_dispatch:
+
+env:
+  AWS_REGION: ap-southeast-1
+  S3_BUCKET: calculator-microservices-frontend
+jobs:
+  deploy:
+    name: Deploy Frontend to S3
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: './calculator-frontend/package-lock.json'
+
+      - name: Install Dependencies
+        working-directory: ./calculator-frontend
+        run: npm ci
+
+      - name: Build React Application
+        working-directory: ./calculator-frontend
+        run: npm run build
+        env:
+          # הגדרת משתני סביבה לכתובות השירותים
+          REACT_APP_ADDITION_SERVICE_URL: ${{ secrets.ADDITION_SERVICE_URL }}
+          REACT_APP_MULTIPLICATION_SERVICE_URL: ${{ secrets.MULTIPLICATION_SERVICE_URL }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Deploy to S3
+        run: |
+          echo "Deploying to S3 bucket ${{ env.S3_BUCKET }}..."
+          aws s3 sync ./calculator-frontend/build/ s3://${{ env.S3_BUCKET }}/ --delete
+
+      - name: Invalidate CloudFront Cache (if CloudFront is used)
+        if: ${{ env.CLOUDFRONT_DISTRIBUTION_ID != '' }}
+        run: |
+          echo "Invalidating CloudFront cache..."
+          aws cloudfront create-invalidation --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+
+      - name: Deployment Status
+        run: |
+          echo "Frontend deployment completed!"
+          echo "Website URL: http://${{ env.S3_BUCKET }}.s3-website.${{ env.AWS_REGION }}.amazonaws.com/"
